@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="uk" data-theme="dark" style="color-scheme: dark;"><head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Для запуску системи енергонезалежності</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;600;800&amp;display=swap">
+<style>
+:root{--bg:#101c27;--panel:#16252f;--bld:#2a3b47;--win:#14222c;--tx:#f4f1ea;--mut:#8a9aa6;--gold:#f2c46d;--lime:#cdff3d;--lit:#ffe08a;--part:#c9a35a;--line:#243642;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+:root:not([data-theme="light"]){color-scheme:dark}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font-family:Manrope,system-ui,sans-serif;line-height:1.4}
+.wrap{max-width:1100px;margin:0 auto;padding:0 20px}
+.hero{text-align:center;padding:36px 0 10px}
+.eyebrow{color:var(--gold);font-size:12px;font-weight:800;letter-spacing:.18em;text-transform:uppercase}
+h1{font-size:clamp(34px,7vw,72px);margin:14px 0 10px;letter-spacing:-.03em;line-height:1.05}
+.sub{color:var(--mut);max-width:640px;margin:0 auto 28px}
+.sum{font-size:clamp(44px,10vw,92px);font-weight:800;letter-spacing:-.03em}
+.sum small{font-size:.32em;color:var(--gold);margin-left:8px}
+.sum span{font-size:.28em;color:var(--mut);font-weight:600;margin-left:6px}
+.bar{max-width:720px;margin:18px auto 0}
+.row{display:flex;justify-content:space-between;gap:12px;font-size:13px;color:var(--mut);flex-wrap:wrap}
+.row b{color:var(--gold)}
+.track{height:8px;border-radius:8px;background:var(--line);margin:8px 0;overflow:hidden}
+.fill{height:100%;background:linear-gradient(90deg,var(--part),var(--lit));border-radius:8px}
+.btn{display:inline-block;margin:26px 0 0;padding:16px 38px;background:var(--lime);color:#14200a;font-weight:800;font-size:18px;border:0;border-radius:4px;text-decoration:none;cursor:pointer;font-family:inherit}
+.town{display:flex;align-items:flex-end;gap:clamp(8px,2vw,24px);margin:56px 0 0;overflow-x:auto;padding-bottom:0}
+.town{justify-content:center}
+.sec{flex:1 1 0;min-width:0;max-width:400px}
+.sec h3{font-size:14px;margin:0 0 8px;font-weight:600}
+.bld{background:var(--bld);border-top:5px solid #3d5160;padding:10px;display:grid;gap:5px 6px;border-radius:2px 2px 0 0}
+.w{height:28px;border-radius:2px;background:linear-gradient(90deg,var(--win) 0 48%,transparent 48% 52%,var(--win) 52%);cursor:pointer}
+.w.part{background:linear-gradient(90deg,var(--part) 0 48%,transparent 48% 52%,var(--part) 52%)}
+.w.on{background:linear-gradient(90deg,var(--lit) 0 48%,transparent 48% 52%,var(--lit) 52%);box-shadow:0 0 8px rgba(255,224,138,.35)}
+.w:hover{outline:1px solid var(--gold)}
+.ground{height:10px;background:#1b2a35}
+.gf{grid-column:1/-1;height:34px;margin-top:4px;background:repeating-linear-gradient(90deg,#1b2a35 0 38px,#22343f 38px 42px);border-radius:2px}
+#tip{position:fixed;z-index:20;pointer-events:none;background:#22343f;border:1px solid #5b5a45;border-radius:12px;padding:12px 16px;font-size:14px;display:none;min-width:190px}
+#tip b{display:block;font-size:15px}#tip i{display:block;color:var(--mut);font-style:normal;margin:2px 0 8px}#tip em{color:var(--gold);font-style:normal;font-weight:800}
+.req{padding:70px 0 80px}
+.req h2{text-align:center;font-size:clamp(26px,5vw,40px);margin:0 0 34px}
+.top{display:flex;gap:30px;flex-wrap:wrap;justify-content:space-between;align-items:center;margin-bottom:24px}
+.big{font-size:clamp(44px,9vw,72px);font-weight:800}.big u{color:var(--lime);text-decoration:none}
+.note{flex:1 1 300px;max-width:560px;background:var(--panel);border-left:3px solid var(--gold);padding:18px 24px;color:var(--mut)}
+.item{display:flex;justify-content:space-between;align-items:center;gap:14px;padding:16px 0;border-bottom:1px solid var(--line)}
+.item small{display:block;color:var(--mut);font-size:13px}.item strong{font-size:clamp(15px,3vw,20px);word-break:break-all}
+.top .note{margin:0 auto}
+.pay{display:flex;gap:32px;flex-wrap:wrap;align-items:center;justify-content:center;padding:28px 0}
+.qr{width:260px;min-height:260px;background:#fff;padding:14px;border-radius:12px;color:#14200a;display:flex;align-items:center;justify-content:center;text-align:center;font-size:14px}
+.qr.empty{background:var(--panel);color:var(--mut);border:1px dashed var(--line)}
+.qr svg{width:100%;height:auto;display:block}
+.plink{display:flex;flex-direction:column;gap:12px;align-items:flex-start;max-width:420px}
+.plink small{color:var(--mut);font-size:13px}
+.plink a{color:var(--gold);font-size:clamp(16px,3.4vw,22px);font-weight:800;word-break:break-all;text-decoration:underline}
+.cp{background:var(--panel);color:var(--tx);border:1px solid var(--line);border-radius:6px;padding:9px 14px;cursor:pointer;font-family:inherit;font-size:13px}
+.adm{position:fixed;left:12px;right:12px;bottom:calc(12px + env(safe-area-inset-bottom,0px));max-width:520px;margin:0 auto;background:#1c2e3a;border:1px solid var(--gold);border-radius:12px;padding:14px;z-index:30;display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px}
+.adm b{width:100%;color:var(--gold)}
+.adm input{flex:1 1 110px;min-width:0;background:var(--bg);border:1px solid var(--line);color:var(--tx);padding:10px;border-radius:6px;font-family:inherit;font-size:15px}
+.adm label{display:flex;gap:6px;align-items:center;color:var(--mut)}
+.adm button{background:var(--lime);border:0;border-radius:6px;padding:10px 16px;font-weight:800;cursor:pointer;font-family:inherit}
+.adm .m{width:100%;color:var(--mut);font-size:13px;min-height:1em}
+.adm.h{display:none}
+.adm .fr{display:flex;flex-wrap:wrap;gap:8px;width:100%;align-items:center}
+.adm .fr.h{display:none}
+.login{position:fixed;top:calc(12px + env(safe-area-inset-top,0px));right:12px;z-index:40;background:rgba(22,37,47,.85);color:var(--tx);border:1px solid var(--line);border-radius:8px;padding:8px 14px;font:600 13px Manrope,system-ui,sans-serif;cursor:pointer;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+</head>
+<body>
+<div id="app"></div>
+<div id="admin"></div>
+<script id="state" type="application/json">{"goal":184000,"per":1000,"pay":{},"upd":""}</script>
+<script>
+(function(){
+var state=JSON.parse(document.getElementById('state').textContent);
+// Конфігурація будинку: секції, поверхи, квартир на поверсі (нумерація йде підряд)
+// g = кількість нежитлових поверхів знизу (без квартир)
+var SECS=[{n:1,name:'Депутатська 23а',fl:24,pf:8,g:1}];
+var apt=1;SECS.forEach(function(s){s.start=apt;apt+=(s.fl-s.g)*s.pf;});
+var TOTAL=apt-1;
+var fmt=function(n){return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'\u00a0');};
+var app=document.getElementById('app');
+var pay=function(){return state.pay;};
+var raised=function(){var t=0;for(var k in state.pay)t+=state.pay[k];return t;};
+var cnt=function(){var c=0;for(var k in state.pay)if(state.pay[k]>0)c++;return c;};
+var REQ=[['Отримувач','ТОВ «СУЧАСНИЙ-КВАРТАЛ»'],['Код ЄДРПОУ','43848705'],['Рахунок','UA863226690000026009300997185'],['Назва банку','ФІЛІЯ ГОЛОВНЕ УПРАВЛІННЯ АТ ОЩАД м.КИЇВ'],['МФО банку','322669'],['Призначення платежу','Сплата за СБЖ, номер секції, номер квартири, ПІП власника']];
+var h='<div class="wrap hero"><div class="eyebrow">За ініціативою мешканців будинку Депутатська 23а</div><h1>Для запуску системи енергонезалежності</h1><p class="sub">Добровільні внески на запуск системи енергонезалежності будинку (інвертор та акумулятори на 20 кВт) під час відключень та нестабільної напруги в мережі</p><div class="sum" id="r"></div><div class="bar"><div class="row"><div>Разом ми вже зібрали <b id="p"></b></div><div id="left"></div></div><div class="track"><div class="fill" id="f"></div></div><div class="row"><div id="c"></div><div id="u"></div></div></div><a class="btn" href="#req">Зробити внесок</a></div>';
+h+='<div class="wrap"><div class="town" id="town"></div></div><div class="ground"></div>';
+h+='<div class="wrap req" id="req"><h2>Реквізити для збору коштів.</h2><div class="top"><div class="note">Після сплати надішліть, будь ласка, квитанцію у Telegram представнику ініціативної групи.</div></div>';
+h+='<div class="pay"><div class="qr" id="qr"></div><div class="plink"><small>Посилання для оплати</small><a id="pl" href="#" target="_blank" rel="noopener"></a><button class="cp" id="pc">Копіювати посилання</button><small style="margin-top:10px">Рахунок (IBAN)</small><strong style="font-size:clamp(15px,3.2vw,20px);word-break:break-all">UA773052990000026003005040485</strong><button class="cp" data-v="UA773052990000026003005040485">Копіювати IBAN</button></div></div>';
+h+='</div><div id="tip"></div>';
+h+='<button class="login" id="lg">Вхід для адміна</button>';
+app.innerHTML=h;
+var $=function(id){return document.getElementById(id);};
+var town=$('town'),tip=$('tip');
+var PAY_URL='https://bank.gov.ua/qr/QkNECjAwMgoyClVDVAoKztHBwSDExc_T0sDS0dzKwCAyM8AKVUE3NzMwNTI5OTAwMDAwMjYwMDMwMDUwNDA0ODUKVUFICjQ1MTA1MjE1CgoKCg=='; // вставте сюди посилання на оплату
+(function(){var q=$('qr'),a=$('pl'),b=$('pc');
+  if(!PAY_URL){q.textContent='QR-код з’явиться тут';q.className='qr empty';a.removeAttribute('href');a.textContent='Посилання буде додано';b.style.display='none';return;}
+  a.href=PAY_URL;a.textContent='Оплатити за посиланням';b.dataset.v=PAY_URL;
+  try{var c=qrcode(0,'M');c.addData(PAY_URL);c.make();q.innerHTML=c.createSvgTag({cellSize:6,margin:0,scalable:true});}catch(x){q.textContent='';}
+})();
+$('lg').onclick=function(){var b=this;b.textContent='Лише для адміністратора (акаунт власника)';setTimeout(function(){b.textContent='Вхід для адміна';},3500);};
+SECS.forEach(function(s){
+  var sec=document.createElement('div');sec.className='sec';sec.style.flexGrow=s.pf;
+  sec.innerHTML='<h3>'+s.name+'</h3>';
+  var b=document.createElement('div');b.className='bld';b.style.gridTemplateColumns='repeat('+s.pf+',1fr)';
+  for(var f=s.fl;f>=1;f--){
+    if(f<=s.g){var g=document.createElement('div');g.className='gf';b.appendChild(g);continue;}
+    for(var i=0;i<s.pf;i++){
+      var a=s.start+(f-1-s.g)*s.pf+i,w=document.createElement('div');
+      w.className='w';w.dataset.a=a;w.dataset.s=s.n;w.dataset.f=f;b.appendChild(w);
+    }
+  }
+  sec.appendChild(b);town.appendChild(sec);
+});
+function paint(){
+  var P=pay(),t=raised(),pc=Math.min(100,t/state.goal*100);
+  $('r').innerHTML=fmt(t)+'<small>грн</small><span>/ '+fmt(state.goal)+' грн</span>';
+  $('p').textContent=pc.toFixed(2).replace('.',',')+'%';
+  $('f').style.width=pc+'%';
+  $('left').textContent='Залишилось '+fmt(Math.max(0,state.goal-t))+' грн';
+  $('c').innerHTML='◉ <b style="color:var(--tx)">'+cnt()+'</b> квартир долучилося';
+  var d=state.upd?new Date(state.upd):null;
+  $('u').textContent=d?'Актуально станом на '+d.toLocaleString('uk-UA',{day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'}):'';
+  town.querySelectorAll('.w').forEach(function(w){var v=P[w.dataset.a]||0;w.className='w'+(v>=state.per?' on':v>0?' part':'');});
+}
+paint();
+function show(e){
+  var w=e.target.closest&&e.target.closest('.w');if(!w){tip.style.display='none';return;}
+  var v=pay()[w.dataset.a]||0;
+  tip.innerHTML='<b>Депутатська 23а · квартира '+w.dataset.a+'</b><i>Поверх '+w.dataset.f+'</i><em>Внесок: '+fmt(v)+' грн</em>';
+  tip.style.display='block';
+  var r=w.getBoundingClientRect(),x=Math.min(r.right+8,innerWidth-tip.offsetWidth-8);
+  tip.style.left=Math.max(8,x)+'px';tip.style.top=Math.max(8,r.top-tip.offsetHeight/2)+'px';
+}
+town.addEventListener('mouseover',show);town.addEventListener('click',show);
+town.addEventListener('mouseleave',function(){tip.style.display='none';});
+app.addEventListener('click',function(e){var c=e.target.closest('.cp');if(c){var t=c.textContent;try{navigator.clipboard.writeText(c.dataset.v);c.textContent='Скопійовано';setTimeout(function(){c.textContent=t;},1500);}catch(x){}}});
+
+// Адмін-панель: лише для власника сторінки
+var pw='';
+function load(){fetch('/api/state',{cache:'no-store'}).then(function(r){return r.json();}).then(function(d){state.pay=d.pay||{};state.upd=d.upd||'';paint();}).catch(function(){});}
+load();setInterval(load,60000);
+var adm=$('admin');
+$('lg').onclick=function(){adm.firstChild.classList.toggle('h');};
+adm.innerHTML='<div class="adm h"><div class="fr" id="lgf"><b>Вхід для адміна</b><input id="pw" type="password" placeholder="Пароль" autocomplete="off"><button id="pb">Увійти</button><div class="m" id="pm"></div></div><div class="fr h" id="wf"><b>Адмін: внесок</b><input id="an" type="number" min="1" max="'+TOTAL+'" placeholder="№ квартири"><input id="as" type="number" min="0" placeholder="Сума, грн" value="'+state.per+'"><label><input id="ar" type="checkbox" style="flex:none"> замінити суму</label><button id="ab">Зберегти</button><div class="m" id="am">Клік по вікну підставляє номер квартири. Квартири: 1–'+TOTAL+'.</div></div></div>';
+function post(body){return fetch('/api/pay',{method:'POST',headers:{'content-type':'application/json'},body:JSON.stringify(body)}).then(function(r){return r.json().then(function(d){d.status=r.status;return d;});});}
+function login(){
+  var v=$('pw').value;if(!v)return;
+  $('pm').textContent='Перевіряю…';
+  post({password:v,check:true}).then(function(d){
+    if(d.ok){pw=v;try{sessionStorage.setItem('ap',v);}catch(e){}$('lgf').classList.add('h');$('wf').classList.remove('h');$('lg').textContent='Адмін: внески';}
+    else{try{sessionStorage.removeItem('ap');}catch(e){}$('pm').textContent=d.status===401?'Невірний пароль':'Помилка сервера, спробуйте ще раз.';}
+  }).catch(function(){$('pm').textContent='Немає зв’язку із сервером.';});
+}
+$('pb').onclick=login;$('pw').onkeydown=function(e){if(e.key==='Enter')login();};
+try{var sp=sessionStorage.getItem('ap');if(sp){$('pw').value=sp;login();}}catch(e){}
+['an','as'].forEach(function(i){$(i).onkeydown=function(e){if(e.key==='Enter')$('ab').click();};});
+town.addEventListener('click',function(e){var w=e.target.closest('.w');if(w&&pw){adm.firstChild.classList.remove('h');$('an').value=w.dataset.a;$('as').focus();}});
+$('ab').onclick=function(){
+  var n=parseInt($('an').value,10),s=parseFloat($('as').value);
+  if(!(n>=1&&n<=TOTAL)||!(s>=0)){$('am').textContent='Перевірте номер квартири та суму.';return;}
+  $('am').textContent='Зберігаю…';
+  post({password:pw,apt:n,amount:s,replace:$('ar').checked}).then(function(d){
+    if(d.pay){state.pay=d.pay;state.upd=d.upd||'';paint();$('am').textContent='Збережено: квартира '+n+'. Можна вносити наступну.';$('an').value='';$('as').value=state.per;$('ar').checked=false;$('an').focus();}
+    else{$('am').textContent=d.status===401?'Пароль більше не діє, увійдіть знову.':(d.error||'Не вдалося зберегти.');}
+  }).catch(function(){$('am').textContent='Немає зв’язку із сервером.';});
+};
+})();
+</script>
+
+
+</body></html>
