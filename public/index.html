@@ -80,6 +80,7 @@ var state=JSON.parse(document.getElementById('state').textContent);
 var SECS=[{n:1,name:'Депутатська 23а',g:1,rows:[8,8,8,8,8,8,8,7,8,8,8,7,7,8,7,8,8,8,8,8,7,8,4]}];
 var apt=1;SECS.forEach(function(s){s.fl=s.g+s.rows.length;s.off=[];s.rows.forEach(function(c){s.off.push(apt);apt+=c;});});
 var TOTAL=apt-1;
+var ALIAS={170:169},LABEL={169:'169/170'}; // кв. 169/170 — одна квартира
 var fmt=function(n){return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'\u00a0');};
 var app=document.getElementById('app');
 var pay=function(){return state.pay;};
@@ -110,7 +111,7 @@ SECS.forEach(function(s){
     if(f<=s.g){var g=document.createElement('div');g.className='gf';b.appendChild(g);continue;}
     var row=document.createElement('div');row.className='fl';
     var cnt=s.rows[f-1-s.g],st=s.off[f-1-s.g];
-    for(var i=0;i<cnt;i++){var w=document.createElement('div');w.className='w';w.dataset.a=st+i;w.dataset.s=s.n;w.dataset.f=f;row.appendChild(w);}
+    for(var i=0;i<cnt;i++){if(ALIAS[st+i])continue;var w=document.createElement('div');w.className='w';w.dataset.a=st+i;w.dataset.s=s.n;w.dataset.f=f;row.appendChild(w);}
     b.appendChild(row);
   }
   sec.appendChild(b);town.appendChild(sec);
@@ -130,7 +131,7 @@ paint();
 function show(e){
   var w=e.target.closest&&e.target.closest('.w');if(!w){tip.style.display='none';return;}
   var v=pay()[w.dataset.a]||0;
-  tip.innerHTML='<b>Депутатська 23а · квартира '+w.dataset.a+'</b><i>Поверх '+w.dataset.f+'</i><em>Внесок: '+fmt(v)+' грн</em>';
+  tip.innerHTML='<b>Депутатська 23а · квартира '+(LABEL[w.dataset.a]||w.dataset.a)+'</b><i>Поверх '+w.dataset.f+'</i><em>Внесок: '+fmt(v)+' грн</em>';
   tip.style.display='block';
   var r=w.getBoundingClientRect(),x=Math.min(r.right+8,innerWidth-tip.offsetWidth-8);
   tip.style.left=Math.max(8,x)+'px';tip.style.top=Math.max(8,r.top-tip.offsetHeight/2)+'px';
@@ -160,7 +161,7 @@ try{var sp=sessionStorage.getItem('ap');if(sp){$('pw').value=sp;login();}}catch(
 ['an','as'].forEach(function(i){$(i).onkeydown=function(e){if(e.key==='Enter')$('ab').click();};});
 town.addEventListener('click',function(e){var w=e.target.closest('.w');if(w&&pw){adm.firstChild.classList.remove('h');$('an').value=w.dataset.a;$('as').focus();}});
 $('ab').onclick=function(){
-  var n=parseInt($('an').value,10),s=parseFloat($('as').value);
+  var n=parseInt($('an').value,10),s=parseFloat($('as').value);n=ALIAS[n]||n;
   if(!(n>=1&&n<=TOTAL)||!(s>=0)){$('am').textContent='Перевірте номер квартири та суму.';return;}
   $('am').textContent='Зберігаю…';
   post({password:pw,apt:n,amount:s,replace:$('ar').checked}).then(function(d){
