@@ -28,13 +28,14 @@ h1{font-size:clamp(34px,7vw,72px);margin:14px 0 10px;letter-spacing:-.03em;line-
 .town{justify-content:center}
 .sec{flex:1 1 0;min-width:0;max-width:400px}
 .sec h3{font-size:14px;margin:0 0 8px;font-weight:600}
-.bld{background:var(--bld);border-top:5px solid #3d5160;padding:10px;display:grid;gap:5px 6px;border-radius:2px 2px 0 0}
-.w{height:28px;border-radius:2px;background:linear-gradient(90deg,var(--win) 0 48%,transparent 48% 52%,var(--win) 52%);cursor:pointer}
+.bld{background:var(--bld);border-top:5px solid #3d5160;padding:10px;display:flex;flex-direction:column;gap:5px;border-radius:2px 2px 0 0}
+.fl{display:flex;gap:6px}
+.w{flex:1;height:28px;border-radius:2px;background:linear-gradient(90deg,var(--win) 0 48%,transparent 48% 52%,var(--win) 52%);cursor:pointer}
 .w.part{background:linear-gradient(90deg,var(--part) 0 48%,transparent 48% 52%,var(--part) 52%)}
 .w.on{background:linear-gradient(90deg,var(--lit) 0 48%,transparent 48% 52%,var(--lit) 52%);box-shadow:0 0 8px rgba(255,224,138,.35)}
 .w:hover{outline:1px solid var(--gold)}
 .ground{height:10px;background:#1b2a35}
-.gf{grid-column:1/-1;height:34px;margin-top:4px;background:repeating-linear-gradient(90deg,#1b2a35 0 38px,#22343f 38px 42px);border-radius:2px}
+.gf{height:34px;margin-top:4px;background:repeating-linear-gradient(90deg,#1b2a35 0 38px,#22343f 38px 42px);border-radius:2px}
 #tip{position:fixed;z-index:20;pointer-events:none;background:#22343f;border:1px solid #5b5a45;border-radius:12px;padding:12px 16px;font-size:14px;display:none;min-width:190px}
 #tip b{display:block;font-size:15px}#tip i{display:block;color:var(--mut);font-style:normal;margin:2px 0 8px}#tip em{color:var(--gold);font-style:normal;font-weight:800}
 .req{padding:70px 0 80px}
@@ -69,14 +70,15 @@ h1{font-size:clamp(34px,7vw,72px);margin:14px 0 10px;letter-spacing:-.03em;line-
 <body>
 <div id="app"></div>
 <div id="admin"></div>
-<script id="state" type="application/json">{"goal":184000,"per":1000,"pay":{},"upd":""}</script>
+<script id="state" type="application/json">{"goal":130000,"per":1000,"pay":{},"upd":""}</script>
 <script>
 (function(){
 var state=JSON.parse(document.getElementById('state').textContent);
 // Конфігурація будинку: секції, поверхи, квартир на поверсі (нумерація йде підряд)
 // g = кількість нежитлових поверхів знизу (без квартир)
-var SECS=[{n:1,name:'Депутатська 23а',fl:24,pf:8,g:1}];
-var apt=1;SECS.forEach(function(s){s.start=apt;apt+=(s.fl-s.g)*s.pf;});
+// rows = кількість квартир на кожному поверсі знизу вгору, починаючи з 2-го; g = нежитлові поверхи знизу
+var SECS=[{n:1,name:'Депутатська 23а',g:1,rows:[8,8,8,8,8,8,8,7,8,8,8,7,7,8,7,8,8,8,8,8,7,8,4]}];
+var apt=1;SECS.forEach(function(s){s.fl=s.g+s.rows.length;s.off=[];s.rows.forEach(function(c){s.off.push(apt);apt+=c;});});
 var TOTAL=apt-1;
 var fmt=function(n){return Math.round(n).toString().replace(/\B(?=(\d{3})+(?!\d))/g,'\u00a0');};
 var app=document.getElementById('app');
@@ -101,15 +103,15 @@ var PAY_URL='https://bank.gov.ua/qr/QkNECjAwMgoyClVDVAoKztHBwSDExc_T0sDS0dzKwCAy
 })();
 $('lg').onclick=function(){var b=this;b.textContent='Лише для адміністратора (акаунт власника)';setTimeout(function(){b.textContent='Вхід для адміна';},3500);};
 SECS.forEach(function(s){
-  var sec=document.createElement('div');sec.className='sec';sec.style.flexGrow=s.pf;
+  var sec=document.createElement('div');sec.className='sec';sec.style.flexGrow=1;
   sec.innerHTML='<h3>'+s.name+'</h3>';
-  var b=document.createElement('div');b.className='bld';b.style.gridTemplateColumns='repeat('+s.pf+',1fr)';
+  var b=document.createElement('div');b.className='bld';
   for(var f=s.fl;f>=1;f--){
     if(f<=s.g){var g=document.createElement('div');g.className='gf';b.appendChild(g);continue;}
-    for(var i=0;i<s.pf;i++){
-      var a=s.start+(f-1-s.g)*s.pf+i,w=document.createElement('div');
-      w.className='w';w.dataset.a=a;w.dataset.s=s.n;w.dataset.f=f;b.appendChild(w);
-    }
+    var row=document.createElement('div');row.className='fl';
+    var cnt=s.rows[f-1-s.g],st=s.off[f-1-s.g];
+    for(var i=0;i<cnt;i++){var w=document.createElement('div');w.className='w';w.dataset.a=st+i;w.dataset.s=s.n;w.dataset.f=f;row.appendChild(w);}
+    b.appendChild(row);
   }
   sec.appendChild(b);town.appendChild(sec);
 });
